@@ -14,14 +14,17 @@ router.use(session({
   secret: 'clavesecretaparaexpresss',
   saveUninitialized: true, // create session even if there is nothing stored
   resave: true, // save session even if unmodified
-  cookie: { maxAge: 60 * 60 * 1000 }
+  cookie: { maxAge: 60 * 60 * 1000 },
+  store: MongoStore.create({mongoUrl: 'mongodb://127.0.0.1:27017/labo_variables_sesion'})
 }));
 
 router.get('/',(req,res) => {
   if(req.session.email) {
-    return res.redirect('/admin');
+    // return res.redirect('/admin');
+      return res.redirect('/users');
   }
-  res.render('index', { title : 'title'});
+    // res.render('index', { title : 'title'})
+    res.redirect('/email-password.html?logout');
 });
 
 router.post('/login',(req,res) => {
